@@ -13,8 +13,8 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    
-                    <a href="/students/create" class="btn btn-primary">Add Data</a><br><br>
+
+                   <a href="/students/create" class="btn btn-primary">Add Data</a><br><br> 
 
 
                     <table class="table table-responsive">
@@ -23,6 +23,7 @@
                                 <th>NIM</th>
                                 <th>Name</th>
                                 <th>Class</th>
+                             
                             </tr>
                         </thead>
                         <tbody>
@@ -31,6 +32,15 @@
                                 <td>{{ $s->nim }}</td>
                                 <td>{{ $s->name }}</td>
                                 <td>{{ $s->class }}</td>
+                                <td>{{ $s->departemen }}</td>
+                                <td>
+                                    <form action="/students/{{$s->id}}" method="post">
+                                        <a href="/students/{{$s->id}}/edit" class="btn btn-warning">Edit</a> 
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" name="delete" class="btn btn-danger">Delete</button>
+                                    </form>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
