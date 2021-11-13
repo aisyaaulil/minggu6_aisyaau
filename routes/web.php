@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
-
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,3 +24,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::resource('students', StudentController::class);
 
+Route::resource('users', UserController::class);
+
+Route::get('/search', [StudentController::class, 'search'] )->name ('search');
+
+Route::get('/search', [UserController::class, 'search'] )->name ('search');
