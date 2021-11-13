@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Student;
+use App\Models\Kelas;
 
 class StudentController extends Controller
 {
@@ -16,7 +17,7 @@ class StudentController extends Controller
     //index untuk menampilkan data 
     public function index()
     {
-        $students = Student::all();
+        $students = Student::with('kelas')->get();
         return view('students.index',['student'=>$students]);
     }
 
@@ -27,7 +28,8 @@ class StudentController extends Controller
      */
     public function create()
     {
-        return view('students.create');
+        $kelas = Kelas::all();
+        return view('students.create',['kelas'=>$kelas]);
     }
 
     /**
@@ -39,10 +41,18 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         //add data
-        Student::create($request->all());
+        $student = new Student;
+        $student->nim = $request->nim;
+        $student->name = $request->name;
+        $student->departemen = $request->departemen;
+        $student->phone_number = $request->phone_number;
+        $kelas = new Kelas;
+        $kelas->id = $request->Kelas;
+        $student->kelas()->associate($kelas);
+        $student->save();
+ 
         // if true, redirect to index
         return redirect()->route('students.index')->with('success', 'Add data success!');
-
     }
 
     /**
@@ -66,7 +76,8 @@ class StudentController extends Controller
     public function edit($id)
     {
         $student = Student::find($id);
-        return view('students.edit',['student'=>$student]);
+        $kelas = Kelas::all();
+        return view('students.edit',['student'=>$student, 'kelas'=>$kelas]);
     }
 
     /**
@@ -81,10 +92,15 @@ class StudentController extends Controller
         $student = Student::find($id);
         $student->nim = $request->nim;
         $student->name = $request->name;
-        $student->class = $request->class;
         $student->departemen = $request->departemen;
         $student->phone_number = $request->phone_number;
+
+        $kelas = new Kelas;
+        $kelas->id = $request->Kelas;
+
+        $student->kelas()->associate($kelas);
         $student->save();
+
         return redirect()->route('students.index');
     }
 
@@ -107,5 +123,5 @@ class StudentController extends Controller
         $student = student::where('name', 'like', "%" . $keyword . "%")->paginate(5);
         return view('students.index', compact('student'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
-    
+
 }
