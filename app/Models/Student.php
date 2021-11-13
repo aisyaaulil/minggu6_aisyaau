@@ -14,4 +14,9 @@ class Student extends Model
         return $this->belongsTo(Kelas::class, 'class_id');
         
     }
+    public function courses(){
+        return $this->belongsToMany(Course::class)->withPivot('nilai');
+    }   
 }
+
+// withPivot: agar data yang terletak di pivot dapat di ambil, jika kolom tersebut merupakan foreign key, maka tidak perlu menggunakan withPivot

@@ -124,4 +124,14 @@ class StudentController extends Controller
         return view('students.index', compact('student'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
+    public function detail($id){
+       $student = Student::find($id);
+       return view('students.detail', ['student' => $student] );
+    }
+
+    public function report($id){
+        $student=Student::find($id);
+        $pdf = PDF::loadview('students.report',['student' =>$student]);
+        return $pdf->stream();
+    }
 }
