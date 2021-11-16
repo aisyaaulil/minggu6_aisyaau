@@ -32,4 +32,4 @@ Route::get('/search', [UserController::class, 'search'] )->name ('search');
 
 Route::get('/students/{id}/detail', [StudentController::class, 'detail']);
 
-Route::get('/students/{id}/detail', [StudentController::class, 'report']);
+Route::get('/students/{id}/report', [StudentController::class, 'report']);
