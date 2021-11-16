@@ -4,9 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        //$this->middleware('auth');
+            $this->middleware(function($request, $next){
+            if(Gate::allows('manage-users')) return $next($request);
+            abort(403, 'Anda tidak memiliki cukup hak akses');
+        });
+    }
     /**
      * Display a listing of the resource.
      *
@@ -104,4 +113,6 @@ class UserController extends Controller
         $user = user::where('name', 'like', "%" . $keyword . "%")->paginate(5);
         return view('users.index', compact('user'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
+
+
 }
