@@ -14,9 +14,8 @@
                         </div>
                     @endif
                     
-                    
 
-                    <form action="/students" method="post">
+                    <form action="/students" method="post" enctype="multipart/form-data">
                     @csrf 
                     <div class="form-group">
                         <label for="nim">NIM</label>
@@ -46,6 +45,12 @@
                         <input type="text" class="form-control" required="required" name="phone_number"></br>
                     </div>
                     <button type="submit" name="add" class="btn btn-primary float-right">Add Data</button>
+
+                    <div class="form-group">
+                        <label for="photo">Profile Photo</label>
+                        <input type="file" class="form-control" required="required" name="photo"></br>
+                    <div>
+
                     </form>
                 </div>
             </div>

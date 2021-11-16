@@ -13,7 +13,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
+                    <img width="150px"  src="{{asset('storage/'.$student->photo)}}"> <br><br>
                     <form action="/students/{{$student->nim}}" method="get">
                         @csrf
                             <table class ="table table-responsive">
